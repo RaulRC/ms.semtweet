@@ -106,9 +106,9 @@
             <version>${avro4s.version}</version>
         </dependency>
         <dependency>
-          <groupId>com.github.scopt</groupId>
-          <artifactId>scopt_2.11</artifactId>
-          <version>3.5.0</version>
+            <groupId>com.github.scopt</groupId>
+            <artifactId>scopt_2.11</artifactId>
+            <version>3.5.0</version>
         </dependency>
 
         <!-- Testing -->
@@ -173,12 +173,31 @@
                 <version>2.19.1</version>
                 <configuration>
                     <environmentVariables>
-                        <COGNOS_HTTP_INTERFACE>localhost</COGNOS_HTTP_INTERFACE>
-                        <COGNOS_HTTP_PORT>9002</COGNOS_HTTP_PORT>
-                        <!-- and so on... -->
+                        <SEMTWEET_HTTP_INTERFACE>localhost</SEMTWEET_HTTP_INTERFACE>
+                        <SEMTWEET_HTTP_PORT>9002</SEMTWEET_HTTP_PORT>
                     </environmentVariables>
                 </configuration>
             </plugin>
+            <!--
+            <plugin>
+                <groupId>org.scalatest</groupId>
+                <artifactId>scalatest-maven-plugin</artifactId>
+                <version>1.0</version>
+                <configuration>
+                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                    <junitxml>.</junitxml>
+                    <filereports>WDF TestSuite.txt</filereports>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>test</id>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
@@ -256,7 +275,7 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-                    <finalName>ms.semtweet-1.0-SNAPSHOT-assembly</finalName>
+                    <finalName>cognosfera-ms-free-1.0-SNAPSHOT-assembly</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
                 <executions>

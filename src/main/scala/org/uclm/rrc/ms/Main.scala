@@ -14,5 +14,6 @@ object Main extends App with Config with Routes{
 
   val log: LoggingAdapter = Logging(system, getClass)
 
+  log.info("[MS_SEMTWEET] Up and running!")
   Http().bindAndHandle(routes, interface = httpInterface, port = httpPort)
 }

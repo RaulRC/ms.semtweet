@@ -1,0 +1,3 @@
+[submodule "ontotwitter"]
+	path = ontotwitter
+	url = git@github.com:RaulRC/ontotwitter.git

@@ -24,6 +24,8 @@ trait TweetAPI extends JsonMappings with SecurityDirectives {
           entity(as[String]) { fieldsToConsume =>
             val jsonMessage : JsValue = fieldsToConsume.parseJson
             val tweet = jsonMessage.convertTo[Tweet]
+            logger.info("[MS_SEMTWEET] received tweet: " + tweet.id)
+            logger.info("[MS_SEMTWEET] received tweet\n: " + tweet.text)
             messageResult = new ResultServiceTweet("MS_SemTweet", s"received $jsonMessage.")
             complete(OK -> messageResult)
           }

@@ -260,7 +260,7 @@
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <manifestEntries>
-                                        <Main-Class>com.kst.Main</Main-Class>
+                                        <Main-Class>org.uclm.rrc.ms.Main</Main-Class>
                                     </manifestEntries>
                                 </transformer>
                             </transformers>

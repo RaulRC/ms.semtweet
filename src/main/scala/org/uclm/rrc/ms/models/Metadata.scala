@@ -10,4 +10,3 @@ case class ResultMsAuthGetAuth(user: String, authorized: Boolean, message: Strin
 
 case class ResultServiceTweet(code: String, message: String)
 
-case class CognosMessage(statusCode: Int, code: String, message: String, extension: String, size:Int)

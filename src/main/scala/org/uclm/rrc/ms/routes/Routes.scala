@@ -9,10 +9,10 @@ trait Routes extends ApiErrorHandler with TweetAPI {
   val authEP = EndPoint("/authentication/company", "GET", headEP, nbodEP)
   val poliEP = EndPoint("/authentication/policies", "POST", headEP, bodyEP)
   */
-  val credEP = ItemEntity("X-Credential-Username", "your user credential name")
+
   val nbodEP = BodyEntity(List())
-  val headEP = HeaderEntity(List(credEP))
-  val freeEP = EndPoint("/free", "POST", headEP, nbodEP)
+  val headEP = HeaderEntity(List())
+  val freeEP = EndPoint("/tweet", "POST", headEP, nbodEP)
   val descrp = DescriptionEntity(List(freeEP), "1.0")
   val routes =
     path(""){

@@ -110,7 +110,13 @@
             <artifactId>scopt_2.11</artifactId>
             <version>3.5.0</version>
         </dependency>
-
+        <!-- JENA -->
+        <!-- https://mvnrepository.com/artifact/org.apache.jena/jena-core -->
+        <dependency>
+            <groupId>org.apache.jena</groupId>
+            <artifactId>jena-core</artifactId>
+            <version>3.4.0</version>
+        </dependency>
         <!-- Testing -->
         <dependency>
             <groupId>org.scalatest</groupId>

@@ -1,11 +1,13 @@
 package org.uclm.rrc.ms.models
 
-case class User(id: Long, name: String, verified: Boolean, followers_count: Long, friends_count: Long,
-                favourites_count: Long, created_at: String, lang: String)
+case class User(id: Option[Int], id_str: Option[String], name: Option[String], verified: Option[Boolean], followers_count: Option[Long],
+                friends_count: Option[Long], favourites_count: Option[Long], created_at: Option[String],
+                lang: Option[String])
 
-case class Tweet (created_at: String, id: Long, text: String, source: String, truncated: Boolean,
-                  retweet_count: Long, favorite_count: Long, lang: String, timestamp_ms: String,
-                  user: User)
+case class Tweet (created_at: Option[String], id: Option[Int], id_str: Option[String], text: Option[String],
+                  source: Option[String], truncated: Option[Boolean],
+                  retweet_count: Option[Long], favorite_count: Option[Long], lang: Option[String],
+                  timestamp_ms: Option[String], user: Option[User])
 
 case class Coordinate(longLag: Array[Long])
 

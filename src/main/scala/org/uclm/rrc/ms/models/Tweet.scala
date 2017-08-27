@@ -2,7 +2,7 @@ package org.uclm.rrc.ms.models
 
 case class User(id: Int, id_str: String, name: String, verified: Boolean, followers_count: Long,
                 friends_count: Long, favourites_count: Long, created_at: String,
-                lang: String)
+                lang: String, time_zone: Option[String])
 
 case class Coordinate(coordinates: Array[Double], `type`: String)
 

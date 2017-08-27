@@ -99,6 +99,7 @@ trait Semtweet {
     u1.addProperty(hasFollowersCount, tweet.user.followers_count.toString())
     u1.addProperty(hasUserCreationDate, tweet.user.created_at)
     u1.addProperty(hasName,tweet.user.name)
+    u1.addProperty(hasTimeZone,tweet.user.time_zone.getOrElse("no_timezone"))
     u1.addProperty(hasUserCreationDate, tweet.user.created_at)
     u1.addProperty(hasUserFavouriteCount, tweet.user.favourites_count.toString())
     u1.addProperty(hasUserId, tweet.user.id_str)
@@ -120,7 +121,7 @@ trait Semtweet {
 
 
   def getOntologyModel(ontFile: String): OntModel = {
-    var ontoModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM, null)
+    val ontoModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM, null)
     try{
       val in = FileManager.get().open(ontFile)
       ontoModel.read(in, null)

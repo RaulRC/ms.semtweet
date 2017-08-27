@@ -9,9 +9,10 @@ import org.uclm.rrc.ms.mappings.JsonMappings
 import org.uclm.rrc.ms.models.{ResultServiceTweet, Tweet}
 import spray.json._
 import DefaultJsonProtocol._
+import org.uclm.rrc.ms.services.semantic.Semtweet
 
 
-trait TweetAPI extends JsonMappings with SecurityDirectives {
+trait TweetAPI extends JsonMappings with SecurityDirectives with Semtweet{
 
   private[this] val logger = Logger.getLogger(getClass().getName())
 
@@ -24,9 +25,10 @@ trait TweetAPI extends JsonMappings with SecurityDirectives {
           entity(as[String]) { fieldsToConsume =>
             val jsonMessage : JsValue = fieldsToConsume.parseJson
             val tweet = jsonMessage.convertTo[Tweet]
+            val model = semTweet(tweet)
             logger.info("[MS_SEMTWEET] received tweet: " + tweet.id)
             logger.info("[MS_SEMTWEET] received tweet\n: " + tweet.text)
-            messageResult = new ResultServiceTweet("MS_SemTweet", s"received $jsonMessage.")
+            messageResult = new ResultServiceTweet("MSSEMTWEET_200", model.getGraph().toString())
             complete(OK -> messageResult)
           }
         }

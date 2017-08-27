@@ -4,10 +4,10 @@ import java.util.logging.Logger
 
 import akka.actor.ActorSystem
 import akka.stream.Materializer
-import org.apache.jena.ontology.{OntModel, OntModelSpec}
-import org.apache.jena.rdf.model.{Model, ModelFactory}
+import org.apache.jena.ontology.{Individual, OntModel, OntModelSpec}
+import org.apache.jena.rdf.model.{Model, ModelFactory, Property}
 import org.apache.jena.util.FileManager
-import org.uclm.rrc.ms.models.Tweet
+import org.uclm.rrc.ms.models.{Coordinate, Hashtag, Tweet}
 
 import scala.concurrent.ExecutionContextExecutor
 
@@ -19,24 +19,100 @@ trait Semtweet {
   implicit def executor: ExecutionContextExecutor
   implicit val materializer: Materializer
 
-  val ontFile = "ontology/semtweets.owl"
-  val TWEET = "Tweet"
-  val USER = "User"
-  val COORD = "Coordinates"
-  val HASH = "Hashtag"
+  val ontFile = "ontotwitter/semtweets.owl"
+  val nameSpace = "http://www.semanticweb.org/rrc/ontologies/2017/7/semtweet"
+  val prefix = "semtweet:"
+  val TWEET = nameSpace + "#Tweet"
+  val USER = nameSpace + "#User"
+  val COORD = nameSpace + "#Coordinates"
+  val HASH = nameSpace + "#Hashtag"
 
   def semTweet(tweet: Tweet): Model = {
     var resultModel = ModelFactory.createDefaultModel()
     val ontTweet  = getOntologyModel(ontFile)
+
+    //Classes
     var cTweet = ontTweet.getOntClass(TWEET)
     var cUser = ontTweet.getOntClass(USER)
     var cCoords = ontTweet.getOntClass(COORD)
     var cHash = ontTweet.getOntClass(HASH)
+    //Data Properties
+    // - tweet
+    val hasId: Property = ontTweet.getOntProperty(nameSpace + "#hasId")
+    val hasCreationDate = ontTweet.getOntProperty(nameSpace + "#hasCreationDate")
+    val hasFavouriteCount = ontTweet.getOntProperty(nameSpace + "#hasFavouriteCount")
+    val hasLang = ontTweet.getOntProperty(nameSpace + "#hasLang")
+    val hasRetweetCount = ontTweet.getOntProperty(nameSpace + "#hasRetweetCount")
+    val hasText = ontTweet.getOntProperty(nameSpace + "#hasText")
+    val hasTextSource = ontTweet.getOntProperty(nameSpace + "#hasTextSource")
+    val hasTimeStampMs = ontTweet.getOntProperty(nameSpace + "#hasTimeStampMs")
+    val isTruncated = ontTweet.getOntProperty(nameSpace + "#isTruncated")
+    // -- object properties
+    val hasCoordinates = ontTweet.getOntProperty(nameSpace + "#hasCoordinates")
+    val hasUser = ontTweet.getOntProperty(nameSpace + "#hasUser")
+    val hasHashtag = ontTweet.getOntProperty(nameSpace + "#hasHashtag")
 
+    // - user
+    val hasFollowersCount = ontTweet.getOntProperty(nameSpace + "#hasFollowersCount")
+    val hasName = ontTweet.getOntProperty(nameSpace + "#hasName")
+    val hasUserCreationDate = ontTweet.getOntProperty(nameSpace + "#hasUserCreationDate")
+    val hasUserFavouriteCount = ontTweet.getOntProperty(nameSpace + "#hasUserFavouriteCount")
+    val hasUserId = ontTweet.getOntProperty(nameSpace + "#hasUserId")
+    val hasUserLang = ontTweet.getOntProperty(nameSpace + "#hasUserLang")
+    val hasTimeZone = ontTweet.getOntProperty(nameSpace + "#hasTimeZone")
+    val isVerified = ontTweet.getOntProperty(nameSpace + "#isVerified")
 
+    // - hashtag
+    val hasHashtagValue = ontTweet.getOntProperty(nameSpace + "#hasHashtagValue")
 
-    resultModel
+    // - coordinates
+    val hasLatitude = ontTweet.getOntProperty(nameSpace + "#hasLatitude")
+    val hasLongitude = ontTweet.getOntProperty(nameSpace + "#hasLongitude")
+
+    val t1: Individual = ontTweet.createIndividual(nameSpace + "#" + tweet.id_str, cTweet)
+    val u1: Individual = ontTweet.createIndividual(nameSpace + "#" + tweet.user.id_str, cUser)
+    val c1: Individual = ontTweet.createIndividual(nameSpace + "#coord_" + tweet.id_str, cCoords)
+    val h1: Individual = ontTweet.createIndividual(nameSpace + "#hasht_" + tweet.id_str, cHash)
+    //Tweet Properties
+    t1.addProperty(hasId, tweet.id.toString())
+    t1.addProperty(hasCreationDate, tweet.created_at)
+    t1.addProperty(hasCreationDate, tweet.created_at)
+    t1.addProperty(hasFavouriteCount, tweet.favorite_count.toString())
+    t1.addProperty(hasLang, tweet.lang)
+    t1.addProperty(hasRetweetCount, tweet.retweet_count.toString())
+    t1.addProperty(hasText, tweet.text)
+    t1.addProperty(hasTextSource, tweet.source)
+    t1.addProperty(hasTimeStampMs, tweet.timestamp_ms.toString())
+    t1.addProperty(isTruncated, tweet.truncated.toString())
+    // - object properties
+    //t1.addProperty(hasCoordinates, c1) see below @ Coordinates
+    t1.addProperty(hasUser, u1)
+    t1.addProperty(hasHashtag, h1)
+
+    //User
+    u1.addProperty(hasFollowersCount, tweet.user.followers_count.toString())
+    u1.addProperty(hasUserCreationDate, tweet.user.created_at)
+    u1.addProperty(hasName,tweet.user.name)
+    u1.addProperty(hasUserCreationDate, tweet.user.created_at)
+    u1.addProperty(hasUserFavouriteCount, tweet.user.favourites_count.toString())
+    u1.addProperty(hasUserId, tweet.user.id_str)
+    u1.addProperty(hasUserLang, tweet.user.lang)
+    u1.addProperty(isVerified, tweet.user.verified.toString())
+
+    //Hashtag
+    tweet.entities.hashtags.map(x => h1.addProperty(hasHashtagValue, x.text))
+
+    //Coordinates
+    val coords: Coordinate = tweet.coordinates.getOrElse(Coordinate(Array(0.0,0.0), "null"))
+    if (!coords.`type`.equals("null")){
+      c1.addProperty(hasLongitude, coords.coordinates(0).toString())
+      c1.addProperty(hasLatitude, coords.coordinates(1).toString())
+      t1.addProperty(hasCoordinates, c1)
+    }
+    ontTweet.write(System.out)
+    ontTweet
   }
+
 
   def getOntologyModel(ontFile: String): OntModel = {
     var ontoModel = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM, null)

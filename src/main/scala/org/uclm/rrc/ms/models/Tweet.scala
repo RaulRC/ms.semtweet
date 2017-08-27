@@ -8,7 +8,7 @@ case class Coordinate(coordinates: Array[Double], `type`: String)
 
 case class Hashtag(indices: Array[Int], text: String)
 
-case class Entity(hashtags: Option[Array[Hashtag]])
+case class Entity(hashtags: Array[Hashtag])
 
 case class Tweet (created_at: String, id: Int, id_str: String, text: String,
                   source: String, truncated: Boolean,

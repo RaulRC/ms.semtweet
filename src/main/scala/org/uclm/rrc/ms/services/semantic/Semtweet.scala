@@ -75,8 +75,8 @@ trait Semtweet {
     val hasLatitude = ontTweet.getOntProperty(nameSpace + "#hasLatitude")
     val hasLongitude = ontTweet.getOntProperty(nameSpace + "#hasLongitude")
 
-    val t1: Individual = ontTweet.createIndividual(nameSpace + "#" + tweet.id_str, cTweet)
-    val u1: Individual = ontTweet.createIndividual(nameSpace + "#" + tweet.user.id_str, cUser)
+    val t1: Individual = ontTweet.createIndividual(nameSpace + "#tweet_" + tweet.id_str, cTweet)
+    val u1: Individual = ontTweet.createIndividual(nameSpace + "#user_" + tweet.user.id_str, cUser)
     val c1: Individual = ontTweet.createIndividual(nameSpace + "#coord_" + tweet.id_str, cCoords)
     val h1: Individual = ontTweet.createIndividual(nameSpace + "#hasht_" + tweet.id_str, cHash)
     //Tweet Properties

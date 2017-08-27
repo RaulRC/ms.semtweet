@@ -5,9 +5,11 @@ import org.uclm.rrc.ms.models._
 import spray.json.DefaultJsonProtocol
 
 trait JsonMappings extends SprayJsonSupport with DefaultJsonProtocol {
+  implicit val hashtagFormat = jsonFormat2(Hashtag.apply)
+  implicit val entityFormat = jsonFormat1(Entity.apply)
   implicit val userFormat = jsonFormat9(User.apply)
   implicit val coordFormat = jsonFormat2(Coordinate.apply)
-  implicit val tweetFormat = jsonFormat12(Tweet.apply)
+  implicit val tweetFormat = jsonFormat13(Tweet.apply)
   implicit val itemEntityFormat = jsonFormat2(ItemEntity.apply)
   implicit val bodyEntityFormat = jsonFormat1(BodyEntity)
   implicit val headerEntityFormat = jsonFormat1(HeaderEntity)

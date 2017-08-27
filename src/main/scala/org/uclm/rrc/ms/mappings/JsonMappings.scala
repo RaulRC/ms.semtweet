@@ -6,7 +6,8 @@ import spray.json.DefaultJsonProtocol
 
 trait JsonMappings extends SprayJsonSupport with DefaultJsonProtocol {
   implicit val userFormat = jsonFormat9(User.apply)
-  implicit val tweetFormat = jsonFormat11(Tweet.apply)
+  implicit val coordFormat = jsonFormat2(Coordinate.apply)
+  implicit val tweetFormat = jsonFormat12(Tweet.apply)
   implicit val itemEntityFormat = jsonFormat2(ItemEntity.apply)
   implicit val bodyEntityFormat = jsonFormat1(BodyEntity)
   implicit val headerEntityFormat = jsonFormat1(HeaderEntity)

@@ -1,5 +1,5 @@
 package org.uclm.rrc.ms.services.semantic
-import java.io.IOException
+import java.io.{IOException, StringWriter}
 import java.util.logging.Logger
 
 import akka.actor.ActorSystem
@@ -26,6 +26,12 @@ trait Semtweet {
   val USER = nameSpace + "#User"
   val COORD = nameSpace + "#Coordinates"
   val HASH = nameSpace + "#Hashtag"
+
+  def modelToString(model: Model, format: String): String = {
+    val out: StringWriter = new StringWriter()
+    model.write(out, format)
+    out.toString()
+  }
 
   def semTweet(tweet: Tweet): Model = {
     var resultModel = ModelFactory.createDefaultModel()
@@ -109,7 +115,6 @@ trait Semtweet {
       c1.addProperty(hasLatitude, coords.coordinates(1).toString())
       t1.addProperty(hasCoordinates, c1)
     }
-    ontTweet.write(System.out)
     ontTweet
   }
 

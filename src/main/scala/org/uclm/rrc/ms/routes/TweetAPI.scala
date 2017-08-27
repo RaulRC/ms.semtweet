@@ -15,6 +15,9 @@ import org.uclm.rrc.ms.services.semantic.Semtweet
 trait TweetAPI extends JsonMappings with SecurityDirectives with Semtweet{
 
   private[this] val logger = Logger.getLogger(getClass().getName())
+  val RDF = "RDF/XML-ABBREV"
+  val N3 = "N-TRIPLE"
+  val TTL = "TURTLE"
 
   val tweetAPI = pathPrefix("tweet") {
     //assert(dataSet.isInstanceOf[String])
@@ -28,6 +31,10 @@ trait TweetAPI extends JsonMappings with SecurityDirectives with Semtweet{
             val model = semTweet(tweet)
             logger.info("[MS_SEMTWEET] received tweet: " + tweet.id)
             logger.info("[MS_SEMTWEET] received tweet\n: " + tweet.text)
+
+            //TODO send to microservice
+            System.out.println(modelToString(model, TTL))
+
             messageResult = new ResultServiceTweet("MSSEMTWEET_200", model.getGraph().toString())
             complete(OK -> messageResult)
           }

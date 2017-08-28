@@ -31,7 +31,7 @@ trait TweetAPI extends JsonMappings with SecurityDirectives with Semtweet with S
             logger.info("[MS_SEMTWEET] received tweet\n: " + tweet.text)
 
             //TODO send to microservice
-            System.out.println(modelToString(model, TTL))
+            System.out.println(modelToString(model, RDF))
             logger.info("[MS_SEMTWEET] sending model...")
             sendModel(model)
             logger.info("[MS_SEMTWEET] sending model complete")

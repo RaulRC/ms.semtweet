@@ -9,15 +9,13 @@ import org.uclm.rrc.ms.mappings.JsonMappings
 import org.uclm.rrc.ms.models.{ResultServiceTweet, Tweet}
 import spray.json._
 import DefaultJsonProtocol._
+import org.apache.jena.ontology.OntModel
 import org.uclm.rrc.ms.services.semantic.Semtweet
+import org.uclm.rrc.ms.services.sendservice.SendService
 
-
-trait TweetAPI extends JsonMappings with SecurityDirectives with Semtweet{
+trait TweetAPI extends JsonMappings with SecurityDirectives with Semtweet with SendService{
 
   private[this] val logger = Logger.getLogger(getClass().getName())
-  val RDF = "RDF/XML-ABBREV"
-  val N3 = "N-TRIPLE"
-  val TTL = "TURTLE"
 
   val tweetAPI = pathPrefix("tweet") {
     //assert(dataSet.isInstanceOf[String])
@@ -34,7 +32,9 @@ trait TweetAPI extends JsonMappings with SecurityDirectives with Semtweet{
 
             //TODO send to microservice
             System.out.println(modelToString(model, TTL))
-
+            logger.info("[MS_SEMTWEET] sending model...")
+            sendModel(model)
+            logger.info("[MS_SEMTWEET] sending model complete")
             messageResult = new ResultServiceTweet("MSSEMTWEET_200", model.getGraph().toString())
             complete(OK -> messageResult)
           }

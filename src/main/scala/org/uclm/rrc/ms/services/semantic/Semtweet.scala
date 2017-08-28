@@ -1,5 +1,5 @@
 package org.uclm.rrc.ms.services.semantic
-import java.io.{IOException, StringWriter}
+import java.io.{File, IOException, PrintWriter, StringWriter}
 import java.util.logging.Logger
 
 import akka.actor.ActorSystem
@@ -31,6 +31,13 @@ trait Semtweet {
     val out: StringWriter = new StringWriter()
     model.write(out, format)
     out.toString()
+  }
+
+  def generateFile(tweet: Tweet, model: OntModel): File = {
+    val outputFile = new File(tweet.id_str + ".owl")
+    val pw = new PrintWriter(outputFile)
+    model.write(pw)
+    outputFile
   }
 
   def semTweet(tweet: Tweet): Model = {

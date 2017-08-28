@@ -20,6 +20,7 @@
         <play.version>2.5.12</play.version>
         <mockito.core.version>2.7.6</mockito.core.version>
         <scala.check.version>1.13.4</scala.check.version>
+        <http.version>2.3.0</http.version>
     </properties>
 
     <dependencies>
@@ -31,6 +32,11 @@
             <version>${scala.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.scalaj</groupId>
+            <artifactId>scalaj-http_2.11</artifactId>
+            <version>${http.version}</version>
+        </dependency>
 
         <!-- akka -->
         <dependency>

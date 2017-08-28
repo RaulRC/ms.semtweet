@@ -7,6 +7,7 @@ ENV SEMTWEET_HTTP_INTERFACE 0.0.0.0
 ENV SEMTWEET_HTTP_PORT 9003
 
 ADD /target/ms.semtweet-1.0-SNAPSHOT-allinone.jar ms.semtweet-1.0-SNAPSHOT-allinone.jar
+ADD /ontotwitter/semtweets.owl ontotwitter/semtweets.owl
 
 EXPOSE 9003
 ENTRYPOINT ["java", "-jar", "ms.semtweet-1.0-SNAPSHOT-allinone.jar"]

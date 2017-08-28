@@ -97,7 +97,7 @@ trait Semtweet {
     t1.addProperty(hasRetweetCount, tweet.retweet_count.toString(), XSDDatatype.XSDlong)
     t1.addProperty(hasText, tweet.text)
     t1.addProperty(hasTextSource, tweet.source)
-    t1.addProperty(hasTimeStampMs, tweet.timestamp_ms.toString(), XSDDatatype.XSDdateTimeStamp)
+    t1.addProperty(hasTimeStampMs, tweet.timestamp_ms.toString(), XSDDatatype.XSDunsignedLong)
     t1.addProperty(isTruncated, tweet.truncated.toString(), XSDDatatype.XSDboolean)
     // - object properties
     //t1.addProperty(hasCoordinates, c1) see below @ Coordinates

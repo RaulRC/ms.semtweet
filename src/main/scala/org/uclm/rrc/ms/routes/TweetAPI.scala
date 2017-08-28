@@ -8,8 +8,6 @@ import akka.http.scaladsl.server.directives.SecurityDirectives
 import org.uclm.rrc.ms.mappings.JsonMappings
 import org.uclm.rrc.ms.models.{ResultServiceTweet, Tweet}
 import spray.json._
-import DefaultJsonProtocol._
-import org.apache.jena.ontology.OntModel
 import org.uclm.rrc.ms.services.semantic.Semtweet
 import org.uclm.rrc.ms.services.sendservice.SendService
 

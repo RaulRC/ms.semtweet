@@ -4,12 +4,11 @@ import java.util.logging.Logger
 
 import akka.actor.ActorSystem
 import akka.stream.Materializer
-import org.apache.jena.datatypes.RDFDatatype
 import org.apache.jena.datatypes.xsd.XSDDatatype
 import org.apache.jena.ontology.{Individual, OntModel, OntModelSpec}
 import org.apache.jena.rdf.model.{Model, ModelFactory, Property}
 import org.apache.jena.util.FileManager
-import org.uclm.rrc.ms.models.{Coordinate, Hashtag, Tweet}
+import org.uclm.rrc.ms.models.{Coordinate, Tweet}
 
 import scala.concurrent.ExecutionContextExecutor
 
@@ -89,7 +88,6 @@ trait Semtweet {
     val c1: Individual = ontTweet.createIndividual(nameSpace + "#coord_" + tweet.id_str, cCoords)
     val h1: Individual = ontTweet.createIndividual(nameSpace + "#hasht_" + tweet.id_str, cHash)
     //Tweet Properties
-    //TODO correct setup of properties data types
     t1.addProperty(hasId, tweet.id.toString(), XSDDatatype.XSDlong)
     t1.addProperty(hasCreationDate, tweet.created_at, XSDDatatype.XSDdate)
     t1.addProperty(hasFavouriteCount, tweet.favorite_count.toString(), XSDDatatype.XSDlong)

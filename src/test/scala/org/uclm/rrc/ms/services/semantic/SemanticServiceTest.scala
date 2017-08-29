@@ -17,7 +17,9 @@ class SemanticServiceTest extends JUnitSuite with MockitoSugar with Semtweet wit
   override implicit val system: ActorSystem = ActorSystem()
   override implicit val executor = system.dispatcher
   override implicit val materializer: ActorMaterializer = ActorMaterializer()
-
+  val RDF = "RDF/XML-ABBREV"
+  val N3 = "N-TRIPLE"
+  val TTL = "TURTLE"
   val aTweet =
     """
       |{
@@ -754,11 +756,25 @@ class SemanticServiceTest extends JUnitSuite with MockitoSugar with Semtweet wit
       |}
       |
     """.stripMargin
-  @Test def testMethod(){
+  @Test def testSemantic(){
     val jsonMessage : JsValue = aTweet.parseJson
     val tweet = jsonMessage.convertTo[Tweet]
     val model = semTweet(tweet)
     assert(model != null)
+  }
+  @Test def testOutput(){
+    val jsonMessage : JsValue = aTweet.parseJson
+    val tweet = jsonMessage.convertTo[Tweet]
+    val model = semTweet(tweet)
+    assert(modelToString(model, RDF) != null)
+  }
+
+  @Test
+  def testOutputFile(){
+    val jsonMessage : JsValue = aTweet.parseJson
+    val tweet = jsonMessage.convertTo[Tweet]
+    val model = semTweet(tweet)
+    assert(generateFile(tweet, model) != null)
   }
 }
 

@@ -4,13 +4,14 @@ import org.junit.Test
 import org.mockito.Mockito._
 import org.scalatest.junit.JUnitSuite
 import org.scalatest.mockito.MockitoSugar
+import org.uclm.rrc.ms.mappings.JsonMappings
 
 import scalaj.http.{HttpRequest, HttpResponse}
 
 /**
   * Created by santiago on 15/03/17.
   */
-class ConsumeReportTest extends JUnitSuite {
+class ConsumeReportTest extends JUnitSuite with JsonMappings {
 
   @Test def testMethod(){
     assert(true)

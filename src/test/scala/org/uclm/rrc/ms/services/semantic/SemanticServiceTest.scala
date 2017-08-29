@@ -8,7 +8,7 @@ import org.scalatest.mockito.MockitoSugar
 /**
   * Created by Raul Reguillo on 29/08/17.
   */
-class ConsumeReportTest extends JUnitSuite with MockitoSugar{
+class SemanticServiceTest extends JUnitSuite with MockitoSugar{
   @Test def testMethod(){
       assert(true)
   }

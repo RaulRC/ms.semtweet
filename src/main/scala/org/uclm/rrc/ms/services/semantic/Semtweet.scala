@@ -20,7 +20,7 @@ trait Semtweet {
   implicit def executor: ExecutionContextExecutor
   implicit val materializer: Materializer
 
-  val ontFile = "ontotwitter/semtweets.owl"
+  var ontFile = "ontotwitter/semtweets.owl"
   val nameSpace = "http://www.semanticweb.org/rrc/ontologies/2017/7/semtweet"
   val prefix = "semtweet:"
   val TWEET = nameSpace + "#Tweet"
@@ -133,7 +133,7 @@ trait Semtweet {
       ontoModel.read(in, null)
     }
     catch {
-      case ioe: IOException => ioe.printStackTrace()
+      case e: Exception => e.printStackTrace()
     }
     ontoModel
   }

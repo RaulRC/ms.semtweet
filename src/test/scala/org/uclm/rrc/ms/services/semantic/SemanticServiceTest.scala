@@ -1,6 +1,8 @@
 package org.uclm.rrc.ms.services.semantic
 
 
+import java.io.IOException
+
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 import org.junit.Test
@@ -20,6 +22,7 @@ class SemanticServiceTest extends JUnitSuite with MockitoSugar with Semtweet wit
   val RDF = "RDF/XML-ABBREV"
   val N3 = "N-TRIPLE"
   val TTL = "TURTLE"
+
   val aTweet =
     """
       |{
@@ -777,6 +780,18 @@ class SemanticServiceTest extends JUnitSuite with MockitoSugar with Semtweet wit
     val outputFile = generateFile(tweet, model)
     assert(outputFile.exists())
     outputFile.delete()
+  }
+  @Test
+  def testExceptionReadingOntology(){
+    ontFile = ""
+    val jsonMessage : JsValue = aTweet.parseJson
+    val tweet = jsonMessage.convertTo[Tweet]
+    try{
+      val model = semTweet(tweet)
+    }
+    catch{
+      case e: Exception => assert(true)
+    }
   }
 }
 

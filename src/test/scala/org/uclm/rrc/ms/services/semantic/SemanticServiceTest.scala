@@ -774,7 +774,9 @@ class SemanticServiceTest extends JUnitSuite with MockitoSugar with Semtweet wit
     val jsonMessage : JsValue = aTweet.parseJson
     val tweet = jsonMessage.convertTo[Tweet]
     val model = semTweet(tweet)
-    assert(generateFile(tweet, model) != null)
+    val outputFile = generateFile(tweet, model)
+    assert(outputFile.exists())
+    outputFile.delete()
   }
 }
 

@@ -7,3 +7,5 @@ trait Config {
   val outputPort = System.getenv("SEMTWEET_OUTPUT_HTTP_PORT").toInt
   val outputService = System.getenv("SEMTWEET_OUTPUT_HTTP_SERVICE")
 }
+
+

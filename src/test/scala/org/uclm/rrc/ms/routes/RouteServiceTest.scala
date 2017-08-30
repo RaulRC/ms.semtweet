@@ -1,19 +1,22 @@
 package org.uclm.rrc.ms.routes
 
+import akka.http.scaladsl.testkit.ScalatestRouteTest
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}
-import akka.http.scaladsl.testkit._
-import akka.http.scaladsl.model.{HttpRequest, HttpResponse}
+import org.apache.jena.rdf.model.Model
+import org.scalatest.mockito.MockitoSugar
 
-import scala.concurrent.Future
+import scalaj.http.HttpResponse
+
+
 
 /**
   * Created by Raul Reguillo on 29/08/17.
   */
 //Integration
 @RunWith(classOf[JUnitRunner])
-class RouteServiceTest extends WordSpec with Matchers with Routes with ScalatestRouteTest{
+class RouteServiceTest extends WordSpec with Matchers with MyRoutes with ScalatestRouteTest{
   val route_pathPrefix = "/datavault/v1/tweet"
   val aTweet =
     """
@@ -386,4 +389,12 @@ class RouteServiceTest extends WordSpec with Matchers with Routes with Scalatest
       }
     }
   }
+}
+
+trait MyRoutes extends Routes with MockitoSugar{
+
+  override def sendModel(model: Model): HttpResponse[String] = {
+    mock[HttpResponse[String]]
+  }
+
 }

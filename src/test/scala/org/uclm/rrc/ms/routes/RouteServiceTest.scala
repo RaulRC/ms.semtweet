@@ -389,6 +389,13 @@ class RouteServiceTest extends WordSpec with Matchers with MyRoutes with Scalate
       }
     }
   }
+  "The service" should {
+    "200 for GET in /" in {
+      Get("/", aTweet) ~> routes ~> check {
+        response.status.intValue() shouldEqual 200
+      }
+    }
+  }
 }
 
 trait MyRoutes extends Routes with MockitoSugar{

@@ -11,7 +11,7 @@ import scalaj.http.{HttpRequest, HttpResponse}
 /**
   * Created by santiago on 15/03/17.
   */
-class ConsumeReportTest extends JUnitSuite with JsonMappings {
+class SendServiceTest extends JUnitSuite with JsonMappings {
 
   @Test def testMethod(){
     assert(true)

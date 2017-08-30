@@ -35,7 +35,7 @@ trait Semtweet {
   }
 
   def generateFile(tweet: Tweet, model: Model): File = {
-    val outputFile = new File(tweet.id_str + ".owl")
+    val outputFile = new File("outputs/" + tweet.id_str + ".rdf")
     val pw = new PrintWriter(outputFile)
     model.write(pw)
     outputFile
